@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <style>
+        * {
+            padding:0px;
+            margin:0px;
+        }
+        h1 {
+            font-family: Montserrat, arial, sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+
+<script>
+    var messageText = 'Shirley is wonderful.';
+
+    ShirleyMessage(5, messageText);
+
+
+    //custom functions
+    function ShirleyMessage(iterations, message) {
+
+        var wordString = '';
+        var words = document.createElement('h1');
+
+        for(i = 0; i < iterations; i++){
+            console.log(message);
+            wordString = wordString + message;
+            wordString = wordString + ' [' + i + ']';
+            wordString = wordString + '<br>';
+        }
+
+        document.body.appendChild(words);
+        words.innerHTML = wordString;
+    }
+
+</script>
+
+</body>
+
+</html>

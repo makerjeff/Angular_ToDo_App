@@ -7,6 +7,7 @@
   "author":"MakerJeff",
   "dependencies": {
     "express":"~4.7.2",
+    "colors":"latest",
     "mongoose":"~3.6.2",
     "morgan":"~1.2.2",
     "body-parser":"~1.5.2",
