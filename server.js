@@ -34,6 +34,82 @@ app.use(bodyParser.json({
 }));                                        //parse application/vnd.api+json as json
 app.use(methodOvveride());
 
+// == define model ==
+var Todo = mongoose.model('Todo', {
+    text : String
+});
+
+// ROUTES ==============
+//API ------------
+
+//get all todos
+app.get('/api/todos', function(request, response){
+
+    Todo.find(function(error, todos) {
+
+        if(error) {
+            response.send(error);
+        }
+        else {
+            response.json(todos);
+        }
+
+    });
+});
+
+//create a to-do, and send back all to-dos after creation
+app.post('/api/todos', function(request, response){
+    //create a to-do, info comes from AJAX
+    Todo.create({
+        text : request.body.text,
+        done : false
+    }, function(error, todo){
+        if(error) {
+            response.send(error);
+        }
+
+        // get and return all todos after you've created another
+        Todo.find(function(error, todos){
+            if(error) {
+                response.send(error);
+            }
+            else {
+                response.json(todos);
+            }
+        });
+    });
+});
+
+//delete a todo
+app.delete('/api/todos/:todo_id', function(request, response){
+    Todo.remove({
+        _id : request.params.todo_id
+    }, function(error, todo){
+        if(error) {
+            response.send(error);
+        }
+
+        //get and return all todos after you create another
+        Todo.find(function(error, todos){
+            if(error) {
+                response.send(error);
+            }
+            else {
+                response.json(todos);
+            }
+        });
+    });
+});
+
+//DEBUG API
+app.get('/api/test', function(request, response){
+    console.log(colors.green(' website hit this API :' + response));
+    response.sendfile( __dirname + '/public/debug.html');
+});
+
+
+
+// START SERVER =====================
 app.listen(8080);
-console.log("App listening on port: " + colors.green("8080"));
+console.log("App listening on port: " + colors.blue("8080"));
 
